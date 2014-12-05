@@ -127,6 +127,11 @@ class ISO3166::Country
         end.include?(true)
       end
     end
+    
+    def find_all_by_translations(locale, val)
+      res = Data.select{|_, v|  v['translations'][locale].to_s === val.to_s}
+      res.blank? ? nil : self.search(res.keys.first)
+    end
 
     protected
     def parse_attributes(attribute, val)
